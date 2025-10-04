@@ -35,6 +35,7 @@ export interface LoadingProps {
 
 export enum StorageKeys {
   USER_TOKEN = 'user_token',
+  USER_EMAIL = 'user_email',
 }
 
 export type HttpMethod = 'GET' | 'POST';

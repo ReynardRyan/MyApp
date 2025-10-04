@@ -1,7 +1,7 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios, { AxiosInstance } from 'axios';
 
 import { Env } from '../constant/env';
+import { useAuthStore } from '../stores/authStore';
 
 class ServiceAPI {
   sapi: AxiosInstance;
@@ -17,9 +17,9 @@ class ServiceAPI {
     };
     
     this.sapi.interceptors.request.use(async (config) => {
-      const token = await AsyncStorage.getItem(Env.tokenName);
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
+      const { userToken } = useAuthStore.getState();
+      if (userToken) {
+        config.headers.Authorization = `Bearer ${userToken}`;
       }
       return config;
     });

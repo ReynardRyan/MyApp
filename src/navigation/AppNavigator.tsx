@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { RootStackParamList, MainTabParamList } from '../types';
 import HomeScreen from '../screens/HomeScreen';
 import LoginScreen from '../screens/LoginScreen';
+import { useAuthStore } from '../stores/authStore';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<MainTabParamList>();
@@ -41,9 +42,20 @@ const MainTabNavigator = () => {
   );
 };
 
-const AppNavigator = () => {
+const AppNavigator: React.FC = () => {
+  const { isAuthenticated, isLoading, setLoading } = useAuthStore();
 
-  const isAuthenticated = true; 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [setLoading]);
+
+  if (isLoading) {
+    return null;
+  } 
 
   return (
     <NavigationContainer>
