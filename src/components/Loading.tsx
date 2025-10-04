@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   container: {
-    backgroundColor: colors.surface,
+    backgroundColor: colors.white,
     borderRadius: 12,
     padding: 24,
     alignItems: 'center',
