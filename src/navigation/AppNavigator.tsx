@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { RootStackParamList, MainTabParamList } from '../types';
 import HomeScreen from '../screens/HomeScreen';
 import LoginScreen from '../screens/LoginScreen';
+import DetailScreen from '../screens/DetailScreen';
 import { useAuthStore } from '../stores/authStore';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -71,11 +72,21 @@ const AppNavigator: React.FC = () => {
         }}
       >
         {isAuthenticated ? (
-          <Stack.Screen
-            name="MainTabs"
-            component={MainTabNavigator}
-            options={{ headerShown: false }}
-          />
+          <>
+            <Stack.Screen
+              name="MainTabs"
+              component={MainTabNavigator}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Detail"
+              component={DetailScreen}
+              options={{
+                title: 'Detail Provinsi',
+                headerShown: false,
+              }}
+            />
+          </>
         ) : (
           <Stack.Screen
             name="Login"

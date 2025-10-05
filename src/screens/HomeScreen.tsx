@@ -3,17 +3,24 @@ import {
   View,
   Text,
   StyleSheet,
-  Alert,
   FlatList,
   RefreshControl,
+  TouchableOpacity,
+  Alert,
 } from 'react-native';
 import { Button, Loading } from '../components';
 import { colors } from '../utils';
 import { useAuthStore } from '../stores/authStore';
 import { useProvinceStore } from '../stores/provinceStore';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../types';
+
+type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'MainTabs'>;
 
 const HomeScreen = () => {
-  const { userEmail, userToken, logout } = useAuthStore();
+  const navigation = useNavigation<HomeScreenNavigationProp>();
+  const { userEmail, logout } = useAuthStore();
   const { provinces, isLoading, error, fetchProvinces, refreshProvinces } = useProvinceStore();
 
   useEffect(() => {
@@ -46,10 +53,16 @@ const HomeScreen = () => {
   };
 
   const renderProvinceItem = ({ item }: { item: any }) => (
-    <View style={styles.provinceItem}>
+    <TouchableOpacity 
+      style={styles.provinceItem}
+      onPress={() => navigation.navigate('Detail', {
+        provinceId: item.id,
+        provinceName: item.name
+      })}
+    >
       <Text style={styles.provinceName}>{item.name}</Text>
       <Text style={styles.provinceId}>ID: {item.id}</Text>
-    </View>
+    </TouchableOpacity>
   );
 
   const renderError = () => {

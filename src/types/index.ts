@@ -1,6 +1,10 @@
 export type RootStackParamList = {
   MainTabs: undefined;
   Login: undefined;
+  Detail: {
+    provinceId: string;
+    provinceName: string;
+  };
 };
 
 export type MainTabParamList = {
